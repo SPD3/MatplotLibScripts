@@ -1,4 +1,5 @@
 #! /usr/bin/env bash
 
-directory=$(pwd)
-python3 $directory/MatplotLibScripts/plot.py $1
+directory=$0
+directory=${directory%/matplotcsv.sh}
+python3 $directory/plot.py $1
