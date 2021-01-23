@@ -1,3 +1,4 @@
 #! /usr/bin/env bash
 
-python3 $PWD/MatplotLibScripts/plot.py $1
+directory=$(pwd)
+python3 $directory/MatplotLibScripts/plot.py $1
