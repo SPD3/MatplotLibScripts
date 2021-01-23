@@ -27,7 +27,6 @@ with open(sys.argv[1]) as csvfile:
 times = valuesForEachColumn[0]
 allSetsOfYValues = valuesForEachColumn[1:]
 count = 1
-
 plt.figure(figsize=(16, 7.5), tight_layout=True)
 
 for setOfYValues in allSetsOfYValues:
@@ -35,5 +34,5 @@ for setOfYValues in allSetsOfYValues:
     count += 1
 
 plt.xlabel(labels[0])
-plt.legend()
+plt.legend(loc="upper right")
 plt.show()
