@@ -42,7 +42,7 @@ def plotAllDataSeparately():
     if(subplotRows * subPlotColumns < len(allValuesForFiles)):
         subPlotColumns += 1
 
-    fig, subplots = plt.subplots(subplotRows, subPlotColumns, figsize=(16, 7.5))
+    fig, subplots = plt.subplots(subplotRows, subPlotColumns, figsize=(16, 7.5), sharey=True, sharex= True)
     fig.set_tight_layout(True)
     labelsCount = 0
     filesCount = 0
@@ -69,19 +69,24 @@ def plotAllDataSeparately():
             subplot.plot(times, setOfYValues, label=labels[labelsCount])
             labelsCount += 1
         subplot.legend(loc="upper right")
-    return fig
 
 def plotAllDataTogether():
     fig, subplot = plt.subplots(1, figsize=(16, 7.5))
     fig.set_tight_layout(True)
     count = 0
+    filesCount = 0
     for fileValues in allValuesForFiles:
         times = fileValues[0]
         allSetsOfYValues = fileValues[1:]
         count += 1
+        name = names[filesCount]
         for setOfYValues in allSetsOfYValues:
-            subplot.plot(times, setOfYValues, label=labels[count])
+            myLabel = labels[count]
+            if len(allfiles) != 1:
+                myLabel = name + "/" + myLabel
+            subplot.plot(times, setOfYValues, label=myLabel)
             count += 1
+        filesCount += 1
 
     subplot.set_xlabel("Time")
     subplot.legend(loc="upper right")
@@ -102,7 +107,6 @@ def setTitle():
 separatePlots = True
 def toggleMultiPlots(event): 
     global separatePlots
-    print(separatePlots)
     if(separatePlots):
         separatePlots = False
         openNewPlot(plotAllDataTogether)
