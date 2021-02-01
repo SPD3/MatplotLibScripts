@@ -37,18 +37,21 @@ for file in allfiles:
     names.append(name)
     allValuesForFiles.append(valuesForEachColumn)
 
-plt.figure(figsize=(16, 7.5), tight_layout=True)
-count = 0
+fig, subplots = plt.subplots(len(allValuesForFiles))
+labelsCount = 0
+filesCount = 0
 for fileValues in allValuesForFiles:
     times = fileValues[0]
     allSetsOfYValues = fileValues[1:]
-    count += 1
+    subplot = subplots[filesCount]
+    filesCount += 1
+    subplot.set_xlabel(labels[labelsCount])
+    labelsCount += 1
     for setOfYValues in allSetsOfYValues:
-        plt.plot(times, setOfYValues, label=labels[count])
-        count += 1
+        subplot.plot(times, setOfYValues, label=labels[labelsCount])
+        labelsCount += 1
+    subplot.legend(loc="upper right")
 
-plt.xlabel("Time")
-plt.legend(loc="upper right")
 title = names[0]
 if len(names) > 1:
     count = 1
@@ -59,4 +62,5 @@ if len(names) > 1:
         else:
             title += ", " + name
 plt.title(title)
+fig.set_size_inches(16, 7.5)
 plt.show()
