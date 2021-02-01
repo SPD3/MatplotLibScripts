@@ -2,4 +2,4 @@
 
 directory=$0
 directory=${directory%/matplotcsv.sh}
-python3 $directory/plot.py $1
+python3 $directory/plot.py $@
