@@ -118,9 +118,10 @@ def openNewPlot(plotFunction):
     plt.close()
     plotFunction()
     setTitle()
-    axcut = plt.axes([0.925, 0.0, 0.075, 0.03])
-    overlayPlotsButton = Button(axcut, "OverlayToggle")
-    overlayPlotsButton.on_clicked(toggleMultiPlots)
+    if(len(allfiles) > 1):
+        axcut = plt.axes([0.925, 0.0, 0.075, 0.03])
+        overlayPlotsButton = Button(axcut, "OverlayToggle")
+        overlayPlotsButton.on_clicked(toggleMultiPlots)
     plt.show()
 
 openNewPlot(plotAllDataSeparately)
