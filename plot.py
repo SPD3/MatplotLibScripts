@@ -37,7 +37,6 @@ for file in allfiles:
     allValuesForFiles.append(valuesForEachColumn)
 
 def plotAllDataSeparately():
-    plt.clf()
     subplotRows = (int) (len(allValuesForFiles) ** 0.5)
     subPlotColumns = (int) (len(allValuesForFiles) / subplotRows)
     if(subplotRows * subPlotColumns < len(allValuesForFiles)):
@@ -70,7 +69,24 @@ def plotAllDataSeparately():
             subplot.plot(times, setOfYValues, label=labels[labelsCount])
             labelsCount += 1
         subplot.legend(loc="upper right")
+    return fig
 
+def plotAllDataTogether():
+    fig, subplot = plt.subplots(1, figsize=(16, 7.5))
+    fig.set_tight_layout(True)
+    count = 0
+    for fileValues in allValuesForFiles:
+        times = fileValues[0]
+        allSetsOfYValues = fileValues[1:]
+        count += 1
+        for setOfYValues in allSetsOfYValues:
+            subplot.plot(times, setOfYValues, label=labels[count])
+            count += 1
+
+    subplot.set_xlabel("Time")
+    subplot.legend(loc="upper right")
+
+def setTitle():
     title = names[0]
     if len(names) > 1:
         count = 1
@@ -80,27 +96,27 @@ def plotAllDataSeparately():
                 title += ", and " + name
             else:
                 title += ", " + name
-
-    fig.canvas.set_window_title(title)
-
-def plotAllDataTogether():
-    
+    plt.gcf().canvas.set_window_title(title)
 
 
-global separatePlots 
 separatePlots = True
-
-def toggleMultiPlots():
+def toggleMultiPlots(event): 
+    global separatePlots
+    print(separatePlots)
     if(separatePlots):
-        plotAllDataTogether()
         separatePlots = False
+        openNewPlot(plotAllDataTogether)
     else:
-        plotAllDataSeparately()
         separatePlots = True
-axcut = plt.axes([0.925, 0.0, 0.075, 0.03])
-overlayPlotsButton = Button(axcut, "OverlayToggle")
-overlayPlotsButton.on_clicked(toggleMultiPlots())
+        openNewPlot(plotAllDataSeparately)
+        
+def openNewPlot(plotFunction):
+    plt.close()
+    plotFunction()
+    setTitle()
+    axcut = plt.axes([0.925, 0.0, 0.075, 0.03])
+    overlayPlotsButton = Button(axcut, "OverlayToggle")
+    overlayPlotsButton.on_clicked(toggleMultiPlots)
+    plt.show()
 
-
-
-plt.show()
+openNewPlot(plotAllDataSeparately)
