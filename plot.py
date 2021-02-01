@@ -37,7 +37,8 @@ for file in allfiles:
     names.append(name)
     allValuesForFiles.append(valuesForEachColumn)
 
-fig, subplots = plt.subplots(len(allValuesForFiles))
+fig, subplots = plt.subplots(len(allValuesForFiles), sharex=True, sharey=True, figsize=(10,10))
+fig.set_tight_layout(True)
 labelsCount = 0
 filesCount = 0
 for fileValues in allValuesForFiles:
@@ -62,5 +63,4 @@ if len(names) > 1:
         else:
             title += ", " + name
 plt.title(title)
-fig.set_size_inches(16, 7.5)
 plt.show()
