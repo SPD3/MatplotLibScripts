@@ -47,7 +47,7 @@ for fileValues in allValuesForFiles:
         plt.plot(times, setOfYValues, label=labels[count])
         count += 1
 
-plt.xlabel(labels[0])
+plt.xlabel("Time")
 plt.legend(loc="upper right")
 title = names[0]
 if len(names) > 1:
